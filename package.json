@@ -1,0 +1,25 @@
+{
+  "name": "config-req",
+  "version": "1.0.0",
+  "description": "Axios wrapper based on a config file",
+  "main": "index.js",
+  "scripts": {
+    "test": "jest"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/kevinccbsg/config-req.git"
+  },
+  "keywords": [
+    "axios",
+    "wrapper",
+    "node",
+    "config"
+  ],
+  "author": "Kevin Julián Martínez Escobar (kevinccbsg@gmail.com)",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/kevinccbsg/config-req/issues"
+  },
+  "homepage": "https://github.com/kevinccbsg/config-req#readme"
+}
