@@ -24,9 +24,11 @@ jobs:
       - run: npm install
       - run:
           name: Run tests
-          command: npm test -- --collectCoverage=true
+          command: npm test -- --reporters="default" --ci --reporters=jest-junit
       - store_artifacts:
           path: coverage
+      - store_test_results:
+          path: test-results
       - save_cache:
           paths:
             - node_modules
