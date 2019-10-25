@@ -29,7 +29,7 @@ describe('Request utility tests', () => {
         expect(data).toEqual([]);
       });
   });
-
+  
   describe('Test with namespace registration', () => {
     const namespaceOptions = { registration: { ...options } };
     it('should return object with activateAccount key with namespace', () => {

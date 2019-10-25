@@ -4,7 +4,8 @@
   "description": "Axios wrapper based on a config file",
   "main": "index.js",
   "scripts": {
-    "test": "jest"
+    "test": "jest",
+    "lint": "./node_modules/.bin/eslint ."
   },
   "repository": {
     "type": "git",
@@ -27,6 +28,7 @@
     "debug": "^4.1.1"
   },
   "devDependencies": {
+    "eslint": "^6.5.1",
     "jest": "^24.9.0"
   }
 }
