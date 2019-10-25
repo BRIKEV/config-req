@@ -1,6 +1,6 @@
 # Javascript Node CircleCI 2.0 configuration file
 #
-# Check https://circleci.com/docs/2.0/language-javascript/ for more details
+# Check {{ '/2.0/language-javascript/' | docs_url }} for more details
 #
 version: 2
 
@@ -11,26 +11,25 @@ defaults: &defaults
 
 jobs:
   test:
-    <<: *defaults
+    <<: *defaults  
     steps:
       - checkout
 
-      # Download and cache dependencies
       - restore_cache:
           keys:
-            - v1-dependencies-{{ checksum "package.json" }}
-            # fallback to using the latest cache if no exact match is found
-            - v1-dependencies-
+          - v1-dependencies-{{ checksum "package.json" }}
+    # fallback to using the latest cache if no exact match is found
+          - v1-dependencies-
 
       - run: npm install
+      - run:
+          name: Run tests
+          command: npm test
 
       - save_cache:
           paths:
             - node_modules
           key: v1-dependencies-{{ checksum "package.json" }}
-
-      # run tests!
-      - run: npm test
 
       - persist_to_workspace:
           root: ~/repo
@@ -46,12 +45,15 @@ jobs:
       - run:
           name: Publish package
           command: npm publish
-
+            
 workflows:
   version: 2
   test-deploy:
     jobs:
-      - test
+      - test:
+          filters:
+            tags:
+              only: /^v.*/
       - deploy:
           requires:
             - test
@@ -59,5 +61,4 @@ workflows:
             tags:
               only: /^v.*/
             branches:
-              only:
-                - master
+              ignore: /.*/
