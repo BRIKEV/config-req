@@ -31,6 +31,10 @@ jobs:
 
       # run tests!
       - run: npm test
+
+      - persist_to_workspace:
+          root: ~/repo
+          paths: .
   deploy:
     <<: *defaults
     steps:
