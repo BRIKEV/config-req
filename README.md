@@ -1,6 +1,9 @@
 
 # config-req
 
+[![CircleCI](https://circleci.com/gh/kevinccbsg/config-req/tree/master.svg?style=svg)](https://circleci.com/gh/kevinccbsg/config-req/tree/master)
+[![Known Vulnerabilities](https://snyk.io/test/github/kevinccbsg/config-req/badge.svg)](https://snyk.io/test/github/kevinccbsg/config-req)
+
 Axios wrapper based on a config file
 
 ## How it works

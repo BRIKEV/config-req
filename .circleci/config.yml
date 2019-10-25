@@ -24,8 +24,9 @@ jobs:
       - run: npm install
       - run:
           name: Run tests
-          command: npm test
-
+          command: npm test -- --collectCoverage=true
+      - store_artifacts:
+          path: coverage
       - save_cache:
           paths:
             - node_modules
