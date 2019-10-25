@@ -7,6 +7,12 @@ Axios wrapper based on a config file
 
 This modules gives you some axios request methods based on a config so that you don't need to worry about method and URL and how to handle their changes on each environments.
 
+### Install package
+
+```
+npm install config-req
+```
+
 ### Basic Example
 
 ```js
