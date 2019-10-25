@@ -15,6 +15,7 @@
     "axios",
     "wrapper",
     "node",
+    "request",
     "config"
   ],
   "author": "Kevin Julián Martínez Escobar (kevinccbsg@gmail.com)",
