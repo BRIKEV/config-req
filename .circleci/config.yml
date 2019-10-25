@@ -35,3 +35,8 @@ jobs:
 
       # run tests!
       - run: npm test
+workflows:
+  version: 2
+  only_test:
+    jobs:
+      - test
