@@ -3,7 +3,7 @@
 
 ![npm](https://img.shields.io/npm/v/config-req)
 [![CircleCI](https://circleci.com/gh/kevinccbsg/config-req/tree/master.svg?style=svg)](https://circleci.com/gh/kevinccbsg/config-req/tree/master)
-[![Known Vulnerabilities](https://snyk.io/test/github/kevinccbsg/config-req/badge.svg)](https://snyk.io/test/github/kevinccbsg/config-req)
+[![Known Vulnerabilities](https://snyk.io/test/github/kevinccbsg/config-req/badge.svg)](https://snyk.io/test/github/kevinccbsg/config-req) [![Greenkeeper badge](https://badges.greenkeeper.io/kevinccbsg/config-req.svg)](https://greenkeeper.io/)
 
 Axios wrapper based on a config file
 
