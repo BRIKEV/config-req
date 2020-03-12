@@ -1,5 +1,8 @@
 const axios = require('axios');
+const chalk = require('chalk');
 const debug = require('debug')('config-req:request');
+
+const log = console.log;
 
 const formatURLPattern = require('./lib/formatURLPattern');
 const validRequest = require('./lib/validRequest');
@@ -29,9 +32,9 @@ const requestMap = (instance, config) => Object.keys(config)
             ...req,
           };
         } else {
-          console.log('You provide an incomplete request object');
-          console.log(`Your request object keys: ${Object.keys(req).join(',')}`);
-          console.log(`Required object keys: ${Object.keys(VALID_REQUEST_OPTIONS).join(',')}`);
+          log(chalk.red('You provide an incomplete request object'));
+          log(`Your request object keys: ${Object.keys(req).join(',')}`);
+          log(`Required object keys: ${Object.keys(VALID_REQUEST_OPTIONS).join(',')}`);
         }
         return instance.request({
           ...config[configKey],
