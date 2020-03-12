@@ -1,6 +1,6 @@
 const validRequest = require('../../lib/validRequest');
 
-test('validRequest returns true as the object has valid keys', () => {
+test('validRequest returns true as the request object has valid keys', () => {
   const req = {
     body: {},
     headers: {},
@@ -11,7 +11,7 @@ test('validRequest returns true as the object has valid keys', () => {
   expect(result).toEqual(expected);
 });
 
-test('validRequest returns false as the object has not valid keys', () => {
+test('validRequest returns false as the request object has not valid keys', () => {
   const req = {
     body: {},
     headers: {},
@@ -22,13 +22,21 @@ test('validRequest returns false as the object has not valid keys', () => {
   expect(result).toEqual(expected);
 });
 
-test('validRequest returns true as the object has more than valid keys', () => {
+test('validRequest returns true as the request object has more than valid keys', () => {
   const req = {
     body: {},
     headers: {},
     query: '',
     params: {},
   };
+  const validKeys = ['body', 'headers', 'query'];
+  const expected = true;
+  const result = validRequest(req, validKeys);
+  expect(result).toEqual(expected);
+});
+
+test('validRequest returns true as the request object is empty', () => {
+  const req = {};
   const validKeys = ['body', 'headers', 'query'];
   const expected = true;
   const result = validRequest(req, validKeys);

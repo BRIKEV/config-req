@@ -53,4 +53,13 @@ describe('Request utility tests', () => {
         });
     });
   });
+
+  it.skip('should display an empty array as a response', () => {
+    const instance = request(options);
+    return instance.activateAccount()
+      .then(({ data }) => {
+        expect(instance.activateAccount).toHaveBeenCalled();
+        expect(data).toEqual([]);
+      });
+  });
 });
