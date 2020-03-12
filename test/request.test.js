@@ -1,5 +1,5 @@
 
-const request = require('../..');
+const request = require('..');
 
 const options = {
   activateAccount: {
