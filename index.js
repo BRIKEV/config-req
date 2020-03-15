@@ -1,48 +1,35 @@
 const axios = require('axios');
-const chalk = require('chalk');
 const debug = require('debug')('config-req:request');
 
-const log = console.log;
 
 const formatURLPattern = require('./lib/formatURLPattern');
-const validRequest = require('./lib/validRequest');
 
 const createInstance = (options = {}) => axios.create({
   ...options,
   timeout: 10000,
 });
 
-const VALID_REQUEST_OPTIONS = ['body', 'params', 'query', 'headers'];
 
 const requestMap = (instance, config) => Object.keys(config)
   .reduce((acum, configKey) => ({
     ...acum,
     [configKey]: !config[configKey].url
       ? requestMap(instance, config[configKey])
-      : ({ body, headers = {}, params = {}, urlParams = {}, ...req } = {}) => {
+      : ({ body, headers = {}, params = {}, urlParams = {}, fullRequest, ...req } = {}) => {
         let instanceParams = {
           body,
           headers,
-          params,
-          query: urlParams,
+          params: fullRequest ? params : urlParams,
+          query: fullRequest ? params : req.query,
+          ...req,
         };
-        if (validRequest(req, VALID_REQUEST_OPTIONS)) {
-          instanceParams = {
-            ...instanceParams,
-            ...req,
-          };
-        } else {
-          log(chalk.red('You provide an incomplete request object'));
-          log(`Your request object keys: ${Object.keys(req).join(',')}`);
-          log(`Required object keys: ${Object.keys(VALID_REQUEST_OPTIONS).join(',')}`);
-        }
         return instance.request({
           ...config[configKey],
-          url: formatURLPattern(config[configKey].url, instanceParams.query),
+          url: formatURLPattern(config[configKey].url, instanceParams.params),
           method: config[configKey].method,
           headers: instanceParams.headers,
           data: instanceParams.body,
-          params: instanceParams.params,
+          params: instanceParams.query,
         });
       },
   }), {});
