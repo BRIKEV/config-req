@@ -1,6 +1,6 @@
 {
   "name": "config-req",
-  "version": "1.0.2",
+  "version": "1.1.0",
   "description": "Axios wrapper based on a config file",
   "main": "index.js",
   "scripts": {
