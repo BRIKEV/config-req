@@ -162,5 +162,21 @@ describe('Request utility tests', () => {
           expect(data).toEqual(MOCK_RESPONSE);
         });
     });
+
+    it('should display an empty array as a response when we passed old URLParams and params', () => {
+      const req = {
+        urlParams: { accountId: 1 },
+        params: { accountId: 2 },
+      };
+      nock.cleanAll();
+      nock(HOST)
+        .post(`${PATH}/1?accountId=2`)
+        .reply(200, MOCK_RESPONSE);
+      const instance = request(options);
+      return instance.activateAccountById(req)
+        .then(({ data }) => {
+          expect(data).toEqual(MOCK_RESPONSE);
+        });
+    });
   });
 });

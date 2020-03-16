@@ -20,7 +20,7 @@ const requestMap = (instance, config) => Object.keys(config)
           body,
           headers,
           params: fullRequest ? params : urlParams,
-          query: fullRequest ? params : req.query,
+          query: fullRequest ? req.query : params,
           ...req,
         };
         return instance.request({
