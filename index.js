@@ -15,12 +15,12 @@ const requestMap = (instance, config) => Object.keys(config)
     ...acum,
     [configKey]: !config[configKey].url
       ? requestMap(instance, config[configKey])
-      : ({ body, headers = {}, params = {}, urlParams = {}, fullRequest, ...req } = {}) => {
+      : ({ body, headers = {}, params = {}, ...req } = {}) => {
         let instanceParams = {
           body,
           headers,
-          params: fullRequest ? params : urlParams,
-          query: fullRequest ? req.query : params,
+          params,
+          query: req.query,
           ...req,
         };
         return instance.request({
@@ -30,6 +30,7 @@ const requestMap = (instance, config) => Object.keys(config)
           headers: instanceParams.headers,
           data: instanceParams.body,
           params: instanceParams.query,
+          ...(instanceParams.auth ? { auth: instanceParams.auth } : {}),
         });
       },
   }), {});

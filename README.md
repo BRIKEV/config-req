@@ -84,6 +84,11 @@ const options = {
       url: 'http://localhost:5000/v1/account/:id/activate',
       method: 'get',
     },
+    withBasicAuth: { // This will affect each call to this endpoint
+      url: 'http://localhost:5000/v1/account/:id/activate',
+      method: 'get',
+      auth: { password: 'pwd', username: 'nickname' },
+    }
   },
 };
 
@@ -91,7 +96,7 @@ const api = request(options);
 
 api.advanced.withBodyInfo({
   body: { example: 'example' }, // this is how to send body params
-  params: { example: 'example' }, // this is how to send query params
+  query: { example: 'example' }, // this is how to send query params
   headers: { Authorization: 'Bearer example' }, // this is how to send header params
 })
   .then(response => {
@@ -103,70 +108,26 @@ api.advanced.withBodyInfo({
 // To change that ID we need to setup the urlParams
 api.advanced.withURLParams({
   body: { example: 'example' }, // this is how to send body params
-  params: { example: 'example' }, // this is how to send query params
+  query: { example: 'example' }, // this is how to send query params
   headers: { Authorization: 'Bearer example' }, // this is how to send header params
-  urlParams: { id: 'urlParam' },
+  params: { id: 'urlParam' },
 })
   .then(response => {
     console.log(response); // Axios response
   });
-````
 
-## Use with Req complete object
-
-You can send a complete req object like the one express.js uses. *Note* for now, it needs to be extended with a flag for version 1.1.0. For version 2.0.0 this will not be needed.
-
-```js
-const request = require('config-req');
-
-const options = {
-  withURLParams: {
-    url: 'http://localhost:5000/v1/account/:id/activate',
-    method: 'get',
-  },
-};
-
-const api = request(options);
-
-const reqObject = {
+// Basic auth
+api.advanced.withURLParams({
   body: { example: 'example' }, // this is how to send body params
-  params: { example: 'example' }, // this is how to send query params
+  query: { example: 'example' }, // this is how to send query params
   headers: { Authorization: 'Bearer example' }, // this is how to send header params
-};
-
-// V1 version
-api.withURLParams({
-  ...reqObject,
-  fullRequest: true,
+  params: { id: 'urlParam' },
+  auth: { password: 'pwd', username: 'nickname' }, // this is how you add basic auth for each request
 })
   .then(response => {
     console.log(response); // Axios response
   });
-
-// V2 version
-api.withURLParams(reqObject)
-  .then(response => {
-    console.log(response); // Axios response
-  });
 ````
-
-This `fullRequest: true` needs to be added to support in V1 a mix of query params and URL params from a req Object request with the old behaviour.
-
-If you want to change it from V2 you must change this cases:
-
-```js
-// if you mix params and urlParams in V2 it won't work as expected
-{
-  params: { example: 'example' },
-  urlParams: { id: 'urlParam' },
-  body: { example: 'this is an example' }
-}
-// just remove it from your code to work with V2
-{
-  params: { example: 'example' },
-  urlParams: { id: 'urlParam' }
-}
-```
 
 ## How to contribute
 
