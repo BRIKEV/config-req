@@ -115,7 +115,6 @@ describe('Request utility tests', () => {
 
     it('should display an empty array as a response when we passed query params and URL params', () => {
       const req = {
-        fullRequest: true,
         query: { data: 1 },
         params: { accountId: 1 },
       };
@@ -130,47 +129,20 @@ describe('Request utility tests', () => {
         });
     });
 
-    it('should display an empty array as a response when we passed old URLParams interface', () => {
+    it('should display an empty array as a response when we basic auth', () => {
+      const auth = { user: 'john', pass: 'doe' };
       const req = {
         query: { data: 1 },
-        urlParams: { accountId: 1 },
+        params: { accountId: 1 },
+        auth: {
+          username: auth.user,
+          password: auth.pass,
+        },
       };
       nock.cleanAll();
       nock(HOST)
         .post(`${PATH}/1?data=1`)
-        .reply(200, MOCK_RESPONSE);
-      const instance = request(options);
-      return instance.activateAccountById(req)
-        .then(({ data }) => {
-          expect(data).toEqual(MOCK_RESPONSE);
-        });
-    });
-
-    it('should display an empty array as a response when we passed old URLParams interface and new one', () => {
-      const req = {
-        query: { data: 1 },
-        urlParams: { accountId: 1 },
-        params: { accountId: 2 },
-      };
-      nock.cleanAll();
-      nock(HOST)
-        .post(`${PATH}/1?data=1`)
-        .reply(200, MOCK_RESPONSE);
-      const instance = request(options);
-      return instance.activateAccountById(req)
-        .then(({ data }) => {
-          expect(data).toEqual(MOCK_RESPONSE);
-        });
-    });
-
-    it('should display an empty array as a response when we passed old URLParams and params', () => {
-      const req = {
-        urlParams: { accountId: 1 },
-        params: { accountId: 2 },
-      };
-      nock.cleanAll();
-      nock(HOST)
-        .post(`${PATH}/1?accountId=2`)
+        .basicAuth(auth)
         .reply(200, MOCK_RESPONSE);
       const instance = request(options);
       return instance.activateAccountById(req)
