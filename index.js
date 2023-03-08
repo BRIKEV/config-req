@@ -5,8 +5,8 @@ const debug = require('debug')('config-req:request');
 const formatURLPattern = require('./lib/formatURLPattern');
 
 const createInstance = (options = {}) => axios.create({
-  ...options,
   timeout: 10000,
+  ...options,
 });
 
 
