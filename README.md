@@ -123,7 +123,7 @@ api.advanced.withURLParams({
   body: { example: 'example' }, // this is how to send body params
   query: { example: 'example' }, // this is how to send query params
   headers: { Authorization: 'Bearer example' }, // this is how to send header params
-  params: { id: 'urlParam' },
+  params: { id: 'urlParam' }, // This is how to send path params
   auth: { password: 'pwd', username: 'nickname' }, // this is how you add basic auth for each request
 })
   .then(response => {
