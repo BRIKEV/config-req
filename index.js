@@ -35,9 +35,15 @@ const requestMap = (instance, config) => Object.keys(config)
       },
   }), {});
 
-const options = (routesConfig, instanceConfig) => {
+const options = (routesConfig, instanceOptions = {}) => {
+  const { interceptors = { response: { } }, ...instanceConfig } = instanceOptions;
   debug('CREATING INSTANCE USING CONFIG', routesConfig);
   const instance = createInstance(instanceConfig);
+  debug('SETTING UP INTERCEPTORS FROM CONFIG', interceptors);
+  if (interceptors) {
+    instance.interceptors.request.use(interceptors.request);
+    instance.interceptors.response.use(interceptors.response.success, interceptors.response.error);
+  }
   debug('INSTANCE REQUEST CONFIG', instanceConfig);
   return requestMap(instance, routesConfig);
 };

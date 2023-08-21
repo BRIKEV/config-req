@@ -1,4 +1,3 @@
-
 # config-req
 
 ![npm](https://img.shields.io/npm/v/config-req)
@@ -9,7 +8,10 @@ Axios wrapper based on a config file
 
 ## How it works
 
-This modules gives you some axios request methods based on a config so that you don't need to worry about method and URL and how to handle their changes on each environments.
+This module allows to set up a programmatic HTTP client based on axios. To set it up, it just the url and the HTTP
+method per environment to be setup ¡et voilà!, a new and shiny HTTP client is ready to be used.
+
+Axios options can be found [here](https://axios-http.com/docs/instance);
 
 ### Install package
 
@@ -69,7 +71,7 @@ api.registration.activateAccount()
 
 ````
 
-## Advance example
+## Customizer request parameters
 
 ```js
 const request = require('config-req');
@@ -121,13 +123,53 @@ api.advanced.withURLParams({
   body: { example: 'example' }, // this is how to send body params
   query: { example: 'example' }, // this is how to send query params
   headers: { Authorization: 'Bearer example' }, // this is how to send header params
-  params: { id: 'urlParam' },
+  params: { id: 'urlParam' }, // This is how to send path params
   auth: { password: 'pwd', username: 'nickname' }, // this is how you add basic auth for each request
 })
   .then(response => {
     console.log(response); // Axios response
   });
 ````
+
+## Intercepting requests
+
+In some scenarios, it might be needed to have a fine-grained control on request or the responses. For example, to
+refresh a token when it is expired or to handle errors in a specific way. This can be achieved by using
+the [interceptors](https://axios-http.com/docs/interceptors) option provided by Axios. These interceptors can be set-up
+in the following way:
+
+```js
+const request = require('config-req');
+
+// Your env configuration
+const config = {
+  activateAccount: {
+    url: 'http://localhost:5000/v1/account/activate',
+    method: 'post',
+  },
+
+};
+
+const api = request(config, {
+  interceptors: {
+    request: (config) => {
+      // Do something before request is sent
+      return config;
+    },
+    response: {
+      success: (response) => {
+        // Do something with response data
+        return response;
+      },
+      error: (error) => {
+        // Do something with response error
+        return Promise.reject(error);
+      }
+    }
+  }
+});
+
+```
 
 ## How to contribute
 
